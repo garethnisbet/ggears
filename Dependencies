@@ -1,0 +1,5 @@
+Requires:
+
+Tkinter
+argparse
+numpy
