@@ -2,7 +2,7 @@ Software for creating both internal and external gears.
 
 usage: ggears [-h] [-n NUM] [-p PRESSUREANGLE] [-t TYPE] [-dia DIAMETER]
               [-a ADDENDUM] [-d DEDENDUM] [-m MODULE] [-r RESOLUTION]
-              [-f PREFIX] [-tm TMAT]
+              [-f PREFIX] [-tm TMAT] [-ft FILETYPE]
 
 example: ggears -n 36 -p 20 -t internal -dia 44
 
@@ -20,6 +20,8 @@ optional arguments:
   -f PREFIX         Choose file prefix (example: -f name)
   -tm TMAT          Transformation Matrix for Inkscape (default:
                     3.5434,0,0,3.5434,0,0 for mm scale)
+  -ft FILETYPE      Use this option if you want bypass plotting or if Tkinter
+                    is not available
 
 Created by Gareth Nisbet 2014
 
