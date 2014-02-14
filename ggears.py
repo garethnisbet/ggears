@@ -13,6 +13,8 @@ p.add_argument('-m', dest = 'module', help ='Module')
 p.add_argument('-r', dest = 'resolution', help ='Sets the number of points in the involution')
 p.add_argument('-f', dest = 'prefix', help ='Choose file prefix (example: -f name)')
 p.add_argument('-tm', dest = 'tmat', help ='Transformation Matrix for Inkscape (default: 3.5434,0,0,3.5434,0,0 for mm scale)')
+p.add_argument('-ft', dest = 'filetype', help ='Use this option if you want bypass plotting or if Tkinter is not available')
+
 args = p.parse_args()
 try:
     import numpy as np
@@ -22,7 +24,7 @@ except:
 try:
     from Tkinter import *
 except:
-    print('Tkinter is not installed; try:\n sudo apt-get install Tkinter')
+    print('Tkinter is not installed; try:\n sudo apt-get install Tkinter\nOr use -ft svg or -ft dxf to write files directly.')
     exit()
 if not len(sys.argv) > 1:
     print('No arguments given. Type: ggears -h')
@@ -300,8 +302,6 @@ class Gears( Frame ):
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
-#         for param, val in sorted(table.items()):
-#             self.display.itemconfig(canvas_id, text='%-20s  %0.4f' % (param, val))
 def createsvg():
     outfilesvg=outfile+'.svg'
     print('SVG created ' + outfile +'.svg')
@@ -354,9 +354,14 @@ else:
     outfile = prefix + '-ggears-external-'+str(numteeth)+'teeth'+'M'+str(m)
 outfilesvg = outfile+'.svg'
 outfiledxf = outfile+'.dxf'
-# plotgear(3.07)
+if args.filetype != None:
+    if args.filetype == 'svg':
+        createsvg()
+        exit()
+    elif args.filetype == 'dxf':
+        createdxf()
+        exit()
 def main():
-#    Gears().mainloop().scaleGear(invols)   
    Gears().mainloop()   
 
 if __name__ == "__main__":
