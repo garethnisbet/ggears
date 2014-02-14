@@ -299,7 +299,7 @@ class Gears( Frame ):
             x = base*scale/2.0
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
-        self.display.itemconfig(canvas_id, text=table2)
+        self.display.itemconfig(canvas_id, text=table2, tag='gear')
 #         for param, val in sorted(table.items()):
 #             self.display.itemconfig(canvas_id, text='%-20s  %0.4f' % (param, val))
 def createsvg():
