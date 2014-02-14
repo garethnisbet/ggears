@@ -3,3 +3,9 @@ Requires:
 Tkinter
 argparse
 numpy
+
+Optional:
+
+Inkscape
+LibreCAD
+
