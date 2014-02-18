@@ -128,10 +128,10 @@ def involute(dedendum,bd,pd,datarange):
 #===============================================================================
 #             Gear Creator
 #===============================================================================
-def gears(numteeth, rootd, pitchdia,w1,invol):
+def gears(numteeth, rootd, pitchdia,w1,invol,gtype):
     invols=np.array([[np.NAN,np.NAN,np.NAN]])
     pi=np.pi
-    if args.type == 'internal':
+    if gtype == 'internal' or gtype == '1':
         w1=-w1
         for i1 in np.arange(0,-360.0,-360./numteeth):
             bwallr=(rootd/2.0)
@@ -264,31 +264,157 @@ def exitfunc():
 class Gears( Frame ):
     def __init__( self ):
         Frame.__init__( self )
-        self.pack( expand = YES )
+        self.grid( columnspan=20, rowspan=20 )
         self.master.title( outfile )
-        self.master.geometry( "650x650" )
+        self.master.geometry( "770x600" )
         self.control = Scale( self, from_ = -3, to = 100, resolution=1 ,orient = HORIZONTAL, command = self.scaleGear )
-        self.control.pack( side = BOTTOM, fill = X )
+        self.control.grid(row=0, column=0, columnspan=10, rowspan=20,sticky=W+E+N+S )
         self.control.set( 0 )
         self.canvasx = 550
         self.canvasy = 550
         self.display = Canvas( self, bg = "black", width=self.canvasx, height=self.canvasy)
-        self.display.pack( expand = YES, fill = BOTH )
+        self.display.grid(columnspan=10, rowspan=20 )
 #===============================================================================
 #         Buttons
 #===============================================================================
-        self.button = Button(text="Incscape", fg="black", command = inkopen)
-        self.button.pack(side = LEFT)
-        self.button = Button(text="libreCAD", fg="black", command = libreCADopen)
-        self.button.pack(side = LEFT)
-        self.button = Button(text="Create DXF", fg="black", command = createdxf)
-        self.button.pack(side = LEFT)
-        self.button = Button(text="Create SVG", fg="black", command = createsvg)
-        self.button.pack(side = LEFT)
-        self.button = Button(text="Exit", fg="red",command = exitfunc)
-        self.button.pack(side = RIGHT)
+        self.button = Button(text="Incscape", width=10, fg="black", command = inkopen)
+        self.button.grid(row=3, column=22)
+        self.button = Button(text="libreCAD", width=10,fg="black", command = libreCADopen)
+        self.button.grid(row=4, column=22)
+        self.button = Button(text="Create DXF", width=10,fg="black", command = createdxf)
+        self.button.grid(row=3, column=23)
+        self.button = Button(text="Create SVG",width=10, fg="black", command = createsvg)
+        self.button.grid(row=4, column=23)
+#         self.button = Button(text="Exit", width=10,fg="red",command = exitfunc)
+#         self.button.grid(row=18, column=22)
+        
+        self.label = Label(self.master, text= "No. Teeth")
+        self.label.grid(row=7, column=22)
+        self.entrytext = StringVar()
+        Entry(self.master, textvariable=self.entrytext,width=13).grid(row=7, column=23)
+        self.buttontext = StringVar()
+        self.label = Label(self.master, text= "Pressure Angle")
+        self.label.grid(row=8, column=22)
+        self.entrytext2 = StringVar()
+        Entry(self.master, textvariable=self.entrytext2,width=13).grid(row=8, column=23)
+        self.buttontext = StringVar()
+        
+        self.label = Label(self.master, text= "Adendum")
+        self.label.grid(row=9, column=22)
+        self.entrytext3 = StringVar()
+        Entry(self.master, textvariable=self.entrytext3,width=13).grid(row=9, column=23)
+        self.buttontext = StringVar()
+        
+        self.label = Label(self.master, text= "Dedendum")
+        self.label.grid(row=10, column=22)
+        self.entrytext4 = StringVar()
+        Entry(self.master, textvariable=self.entrytext4,width=13).grid(row=10, column=23)
+        self.buttontext = StringVar()
+        
+        self.label = Label(self.master, text= "Hole Size")
+        self.label.grid(row=11, column=22)
+        self.entrytext5 = StringVar()
+        Entry(self.master, textvariable=self.entrytext5,width=13).grid(row=11, column=23)
+        self.buttontext = StringVar()
+        
+        self.label = Label(self.master, text= "Resolution")
+        self.label.grid(row=12, column=22)
+        self.entrytext6 = StringVar()
+        Entry(self.master, textvariable=self.entrytext6,width=13).grid(row=12, column=23)
+        self.buttontext = StringVar()
+        
+        self.label = Label(self.master, text= "Module")
+        self.label.grid(row=13, column=22)
+        self.entrytext7 = StringVar()
+        Entry(self.master, textvariable=self.entrytext7,width=13).grid(row=13, column=23)
+        self.buttontext = StringVar()
+        
+        self.var1 = IntVar()
+        self.var1=StringVar()
+        Checkbutton(self.master, width=10, text="Internal", variable=self.var1).grid(row=14, column=23)
+        
+        self.buttontext.set("Update")
+        Button(self.master, textvariable=self.buttontext,width=10, fg="red", command=self.onClick).grid(row=15, column=23)
+
+    def onClick(self):
+        if self.entrytext.get() == '':
+            numteeth2 = numteeth
+        else:
+            numteeth2 = float(self.entrytext.get())
+        if self.entrytext2.get() == '':
+            pressureangle2=pressureangle
+        else:
+            pressureangle2 = float(self.entrytext2.get())
+        if self.entrytext3.get() == '':
+            addendum2 = addendum
+        else:
+            addendum2 = float(self.entrytext3.get())
+        if self.entrytext4.get() == '':
+            dedendum2=dedendum
+        else:
+            dedendum2 = float(self.entrytext4.get())
+            
+        if self.entrytext5.get() == '':
+            base2 = base
+        else:
+            base2 = float(self.entrytext5.get())
+            
+        if self.entrytext6.get() == '':
+            resolution2 = resolution
+        else:
+            resolution2 = float(self.entrytext6.get())
+            
+        if self.entrytext7.get() == '':
+            m2 = m
+        else:
+            m2 = float(self.entrytext7.get())
+        global m2
+        addendum2=(m/m2)*addendum
+        dedendum2=(m/m2)*dedendum
+        pitchdia2 = numteeth2/m2
+        Pd2 = numteeth2 / pitchdia2
+        bd2=pitchdia2*np.cos(pressureangle2*np.pi/180.0)
+        od2=pitchdia2+(2.0*addendum2)
+        w2=-180.0/numteeth2
+        rootd2=pitchdia2-(2*dedendum2)
+        if bd2 < rootd2:
+            minrange=np.sqrt(((rootd2**2)/(bd2**2))-1)
+        else:
+            minrange=0
+        maxrange=np.sqrt(((od2**2)/(bd2**2))-1)
+        gtype=self.var1.get()
+        global gtype
+        self.display.delete( "gear" )
+        canvasx=self.canvasx
+        canvasy=self.canvasy
+        base=base2
+        global gtype
+        global base
+        global invols
+        global resolution2
+        datarange2=np.linspace(minrange,maxrange,resolution2)
+        invol2=involute(rootd2,bd2,pitchdia2,datarange2)
+        invols=gears(numteeth2, rootd2, pitchdia2,w2,invol2,gtype)
+        for i in range(1,len(invols)-1):
+            x1 = invols[i-1,0]
+            y1 = invols[i-1,1]
+            x2 = invols[i,0]
+            y2 = invols[i,1]
+            self.display.create_line( canvasx/2.0 + x1*scale, canvasy/2.0 - y1*scale, canvasx/2.0 + x2*scale, canvasy/2.0 - y2*scale, fill="pink", tag = 'gear')
+            x = base*scale/2.0
+        self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
+        canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
+        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
+        global table2
+        self.display.itemconfig(canvas_id, text=table2, tag='gear')
+#         self.master.destroy()
+#         print(input)
+#     def button_click(self, e):
+#         pass
+
     def scaleGear( self, scaleValue):
         scale = int( scaleValue ) + 3.07
+        global scale
         self.display.delete( "gear" )
         canvasx=self.canvasx
         canvasy=self.canvasy
@@ -347,7 +473,7 @@ def exitfunc():
 datarange=np.linspace(minrange,maxrange,resolution)
 invol=involute(rootd,bd,pitchdia,datarange)
 w1=-180.0/numteeth
-invols=gears(numteeth, rootd, pitchdia,w1,invol)
+invols=gears(numteeth, rootd, pitchdia,w1,invol,args.type)
 if args.type == 'internal':
     outfile = prefix + '-ggears-internal-'+str(numteeth)+'teeth'+'M'+str(m)
 else:
