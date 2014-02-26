@@ -323,12 +323,6 @@ class Gears( Frame ):
         Entry(self.master, textvariable=self.entrytext6,width=13).grid(row=12, column=23)
         self.buttontext = StringVar()
         
-        self.label = Label(self.master, text= "Module")
-        self.label.grid(row=13, column=22)
-        self.entrytext7 = StringVar()
-        Entry(self.master, textvariable=self.entrytext7,width=13).grid(row=13, column=23)
-        self.buttontext = StringVar()
-        
         self.var1 = IntVar()
         self.var1=StringVar()
         Checkbutton(self.master, width=10, text="Internal", variable=self.var1).grid(row=14, column=23)
@@ -353,24 +347,17 @@ class Gears( Frame ):
             dedendum2=dedendum
         else:
             dedendum2 = float(self.entrytext4.get())
-            
+        global base
         if self.entrytext5.get() == '':
             base2 = base
         else:
             base2 = float(self.entrytext5.get())
-            
+        global resolution2
         if self.entrytext6.get() == '':
             resolution2 = resolution
         else:
             resolution2 = float(self.entrytext6.get())
-            
-        if self.entrytext7.get() == '':
-            m2 = m
-        else:
-            m2 = float(self.entrytext7.get())
-        global m2
-        addendum2=(m/m2)*addendum
-        dedendum2=(m/m2)*dedendum
+
         pitchdia2 = numteeth2/m2
         Pd2 = numteeth2 / pitchdia2
         bd2=pitchdia2*np.cos(pressureangle2*np.pi/180.0)
@@ -382,16 +369,14 @@ class Gears( Frame ):
         else:
             minrange=0
         maxrange=np.sqrt(((od2**2)/(bd2**2))-1)
-        gtype=self.var1.get()
         global gtype
+        gtype=self.var1.get()
         self.display.delete( "gear" )
         canvasx=self.canvasx
         canvasy=self.canvasy
-        base=base2
-        global gtype
-        global base
+        base=base2       
         global invols
-        global resolution2
+
         datarange2=np.linspace(minrange,maxrange,resolution2)
         invol2=involute(rootd2,bd2,pitchdia2,datarange2)
         invols=gears(numteeth2, rootd2, pitchdia2,w2,invol2,gtype)
@@ -404,8 +389,8 @@ class Gears( Frame ):
             x = base*scale/2.0
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
-        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
         global table2
+        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
 #         self.master.destroy()
 #         print(input)
@@ -413,8 +398,8 @@ class Gears( Frame ):
 #         pass
 
     def scaleGear( self, scaleValue):
-        scale = int( scaleValue ) + 3.07
         global scale
+        scale = int( scaleValue ) + 3.07
         self.display.delete( "gear" )
         canvasx=self.canvasx
         canvasy=self.canvasy
