@@ -322,7 +322,6 @@ class Gears( Frame ):
         self.entrytext6 = StringVar()
         Entry(self.master, textvariable=self.entrytext6,width=13).grid(row=12, column=23)
         self.buttontext = StringVar()
-        
         self.var1 = IntVar()
         self.var1=StringVar()
         Checkbutton(self.master, width=10, text="Internal", variable=self.var1).grid(row=14, column=23)
@@ -357,8 +356,7 @@ class Gears( Frame ):
             resolution2 = resolution
         else:
             resolution2 = float(self.entrytext6.get())
-
-        pitchdia2 = numteeth2/m2
+        pitchdia2 = numteeth2/m
         Pd2 = numteeth2 / pitchdia2
         bd2=pitchdia2*np.cos(pressureangle2*np.pi/180.0)
         od2=pitchdia2+(2.0*addendum2)
@@ -374,6 +372,7 @@ class Gears( Frame ):
         self.display.delete( "gear" )
         canvasx=self.canvasx
         canvasy=self.canvasy
+        
         base=base2       
         global invols
 
@@ -390,7 +389,7 @@ class Gears( Frame ):
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         global table2
-        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
+        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m) +'\n'+'8 Resolution: ' + str(resolution2)
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
 #         self.master.destroy()
 #         print(input)
