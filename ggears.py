@@ -177,8 +177,13 @@ def gears(numteeth, rootd, pitchdia,w1,invol,gtype):
 #                 DXF Creator
 #===============================================================================
 def createdxf():
-    outfiledxf=outfile+'.dxf'
-    print('DXF created ' + outfile +'.dxf')
+    try:
+        outfiledxf=outfile2+'.dxf'
+        print('DXF created ' + outfile2 +'.dxf')
+    except:
+        outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
+        outfiledxf=outfile+'.dxf'
+        print('DXF created ' + outfile +'.dxf')
     f = open(outfiledxf, "w")
     f.write("  0\nSECTION\n")
     f.write("  2\nENTITIES\n")
@@ -211,14 +216,18 @@ def createdxf():
     f.write("  0\nENDSEC\n")
     f.write("  0\nSECTION\n")        
     f.write("  0\nEOF\n")
-    if outfile != "-":
-        f.close()
+    f.close()
 #===============================================================================
 #             SVG Creator
 #===============================================================================
 def createsvg():
-    outfilesvg=outfile+'.svg'
-    print('SVG created ' + outfile +'.svg')
+    try:
+        outfilesvg=outfile2+'.svg'
+        print('SVG created ' + outfile2 +'.svg')
+    except:
+        outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
+        outfilesvg=outfile+'.svg'
+        print('SVG created ' + outfile +'.svg')
     f = open(outfilesvg, "w")
     f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
     f.write('<!-- Created with ggear by G. Nisbet) -->\n')
@@ -252,10 +261,18 @@ def createsvg():
 #===============================================================================
 def inkopen():
     createsvg()
-    subprocess.Popen(['inkscape', outfilesvg], stdout=subprocess.PIPE)
+    try:
+        subprocess.Popen(['inkscape', outfile2 + '.svg'], stdout=subprocess.PIPE)
+    except:
+        outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
+        subprocess.Popen(['inkscape', outfile + '.svg'], stdout=subprocess.PIPE)
 def libreCADopen():
     createdxf()
-    subprocess.Popen(['librecad', outfiledxf], stdout=subprocess.PIPE)
+    try:
+        subprocess.Popen(['librecad', outfile2 +'.dxf'], stdout=subprocess.PIPE)
+    except:
+        outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
+        subprocess.Popen(['librecad', outfile +'.dxf'], stdout=subprocess.PIPE)
 def exitfunc():
     exit()
 #===============================================================================
@@ -405,6 +422,11 @@ class Gears( Frame ):
         global table2
         table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
+        global outfile2
+        if gtype == 'internal' or gtype == '1':
+            outfile2 = 'internal-'+str(numteeth2)+'teeth'+'M'+str(m)
+        else:
+            outfile2 = prefix + 'External-'+str(numteeth2)+'teeth'+'M'+str(m)
 #         self.master.destroy()
 #         print(input)
 #     def button_click(self, e):
@@ -426,44 +448,6 @@ class Gears( Frame ):
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
-def createsvg():
-    outfilesvg=outfile+'.svg'
-    print('SVG created ' + outfile +'.svg')
-    f = open(outfilesvg, "w")
-    f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
-    f.write('<!-- Created with ggear by G. Nisbet) -->\n')
-    f.write('<svg')
-    f.write(' docname="ggears.svg">\n')
-    f.write('   <g\n')
-    f.write('     id="g1"\n')
-    f.write('     font-size="0.2"\n')
-    if args.tmat == None:
-        f.write('     transform="matrix(3.5434,0,0,3.5434,0,0)"\n')
-    else:
-        f.write('     transform="matrix('+str(args.tmat) +')"\n')
-    f.write('     style="font-size:1px;stroke-width:0.05">\n')
-    f.write('<circle r="' +str(base/2.0) +'" stroke="black" stroke-width="0.05" fill="none" />\n')
-    f.write('    <path\n')
-    f.write('       id="path1"\n')
-    f.write('       d="m ')
-    for i in range(1,len(invols)-1):
-        x1 = invols[i-1,0]
-        y1 = invols[i-1,1]
-        f.write(str(x1)+','+str(y1)+' L ')
-    f.write(str(invols[0,0])+','+str(invols[0,1]))
-    f.write('"\n')
-    f.write('       style="fill:none;stroke:#000000" />\n')
-    f.write('  </g>\n')
-    f.write('</svg>')
-    f.close()
-def inkopen():
-    createsvg()
-    subprocess.Popen(['inkscape', outfilesvg], stdout=subprocess.PIPE)
-def libreCADopen():
-    createdxf()
-    subprocess.Popen(['librecad', outfiledxf], stdout=subprocess.PIPE)
-def exitfunc():
-    exit()
 
 #===============================================================================
 #             Run the Program
@@ -472,17 +456,18 @@ datarange=np.linspace(minrange,maxrange,resolution)
 invol=involute(rootd,bd,pitchdia,datarange)
 w1=-180.0/numteeth
 invols=gears(numteeth, rootd, pitchdia,w1,invol,args.type)
-if args.type == 'internal':
-    outfile = prefix + '-ggears-internal-'+str(numteeth)+'teeth'+'M'+str(m)
-else:
-    outfile = prefix + '-ggears-external-'+str(numteeth)+'teeth'+'M'+str(m)
-outfilesvg = outfile+'.svg'
-outfiledxf = outfile+'.dxf'
+
 if args.filetype != None:
+    if args.type == 'internal':
+        outfile = prefix + '-ggears-internal-'+str(numteeth)+'teeth'+'M'+str(m)
+    else:
+        outfile = prefix + '-ggears-external-'+str(numteeth)+'teeth'+'M'+str(m)
     if args.filetype == 'svg':
+        outfile = outfile+'.svg'
         createsvg()
         exit()
     elif args.filetype == 'dxf':
+        outfile = outfile+'.dxf'
         createdxf()
         exit()
 def main():
