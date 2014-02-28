@@ -282,7 +282,7 @@ class Gears( Frame ):
     def __init__( self ):
         Frame.__init__( self )
         self.grid( columnspan=20, rowspan=20 )
-        self.master.title( outfile )
+        self.master.title( 'GGears v 0.1' )
         self.master.geometry( "770x600" )
         self.control = Scale( self, from_ = -3, to = 100, resolution=1 ,orient = HORIZONTAL, command = self.scaleGear )
         self.control.grid(row=0, column=0, columnspan=10, rowspan=20,sticky=W+E+N+S )
