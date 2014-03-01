@@ -13,7 +13,7 @@ p.add_argument('-m', dest = 'module', help ='Module')
 p.add_argument('-r', dest = 'resolution', help ='Sets the number of points in the involution')
 p.add_argument('-f', dest = 'prefix', help ='Choose file prefix (example: -f name)')
 p.add_argument('-tm', dest = 'tmat', help ='Transformation Matrix for Inkscape (default: 3.5434,0,0,3.5434,0,0 for mm scale)')
-p.add_argument('-ft', dest = 'filetype', help ='Use this option if you want bypass plotting or if Tkinter is not available')
+p.add_argument('-ft', dest = 'filetype', help ='(svg or dxf) Use this option if you want to bypass plotting or if Tkinter is not available')
 
 args = p.parse_args()
 try:
