@@ -187,34 +187,37 @@ def createdxf():
     f = open(outfiledxf, "w")
     f.write("  0\nSECTION\n")
     f.write("  2\nENTITIES\n")
-    for i1 in range(1,len(invols)-1):
-        x1 = invols[i1-1,0]
-        y1 = invols[i1-1,1]
-        x2 = invols[i1,0]
-        y2 = invols[i1,1]
-        f.write("  0\nLINE\n")
+    f.write("  0\nLWPOLYLINE\n")
+    f.write("  100\nAcDbPolyline\n")
+    f.write("  90\n")
+    f.write("  "+str(len(invols)-2)+"\n")
+    f.write("  70\n0\n")
+    for i1 in range(0,len(invols)):
+        x1 = invols[i1,0]
+        y1 = invols[i1,1]
         f.write(" 10\n{0}\n".format(x1))
         f.write(" 20\n{0}\n".format(y1))
-        f.write(" 11\n{0}\n".format(x2))
-        f.write(" 21\n{0}\n".format(y2))
-    f.write("  0\nENDSEC\n")
-    f.write("  0\nSECTION\n")
+        f.write(" 30\n0\n")
+    f.write(" 10\n{0}\n".format(invols[0,0]))
+    f.write(" 20\n{0}\n".format(invols[0,1]))
+    f.write(" 30\n0\n")
 
     circvals=np.linspace(-np.pi,np.pi,120)
     circ=np.array([(base/2.0)*np.cos(circvals),(base/2.0)*np.sin(circvals)])
-    f.write("  2\nENTITIES\n")
-    for i1 in range(1,circ.shape[1]):
-        cx1 = circ[0,i1-1]
-        cy1 = circ[1,i1-1]
+    f.write("  0\nLWPOLYLINE\n")
+    f.write("  100\nAcDbPolyline\n")
+    f.write("  90\n")
+    f.write("  "+str(circ.shape[1])+"\n")
+    f.write("  70\n0\n")
+    for i1 in range(0,circ.shape[1]):
+        cx1 = circ[0,i1]
+        cy1 = circ[1,i1]
         cx2 = circ[0,i1]
         cy2 = circ[1,i1]
-        f.write("  0\nLINE\n")
         f.write(" 10\n{0}\n".format(cx1))
         f.write(" 20\n{0}\n".format(cy1))
-        f.write(" 11\n{0}\n".format(cx2))
-        f.write(" 21\n{0}\n".format(cy2))
-    f.write("  0\nENDSEC\n")
-    f.write("  0\nSECTION\n")        
+        f.write(" 30\n0\n")
+    f.write("  0\nENDSEC\n")    
     f.write("  0\nEOF\n")
     f.close()
 #===============================================================================
@@ -250,7 +253,7 @@ def createsvg():
         y1 = invols[i-1,1]
         f.write(str(x1)+','+str(y1)+' L ')
     f.write(str(invols[0,0])+','+str(invols[0,1]))
-    f.write('"\n')
+    f.write('z"\n')
     f.write('       style="fill:none;stroke:#000000" />\n')
     f.write('  </g>\n')
     f.write('</svg>')
@@ -415,9 +418,9 @@ class Gears( Frame ):
             y1 = invols[i-1,1]
             x2 = invols[i,0]
             y2 = invols[i,1]
-            self.display.create_line( canvasx/2.0 + x1*scale, canvasy/2.0 - y1*scale, canvasx/2.0 + x2*scale, canvasy/2.0 - y2*scale, fill="pink", tag = 'gear')
+            self.display.create_line( canvasx/2.0 + x1*scale, canvasy/2.0 - y1*scale, canvasx/2.0 + x2*scale, canvasy/2.0 - y2*scale, fill="#acff77", tag = 'gear')
             x = base*scale/2.0
-        self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
+        self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="#acff77", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         global table2
         table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
@@ -443,9 +446,9 @@ class Gears( Frame ):
             y1 = invols[i-1,1]
             x2 = invols[i,0]
             y2 = invols[i,1]
-            self.display.create_line( canvasx/2.0 + x1*scale, canvasy/2.0 - y1*scale, canvasx/2.0 + x2*scale, canvasy/2.0 - y2*scale, fill="pink", tag = 'gear')
+            self.display.create_line( canvasx/2.0 + x1*scale, canvasy/2.0 - y1*scale, canvasx/2.0 + x2*scale, canvasy/2.0 - y2*scale, fill="#acff77", tag = 'gear',width=1)
             x = base*scale/2.0
-        self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="pink", tag='gear')
+        self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="#acff77", tag='gear',width=1)
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
 
