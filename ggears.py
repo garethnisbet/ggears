@@ -190,7 +190,7 @@ def createdxf():
     f.write("  0\nLWPOLYLINE\n")
     f.write("  100\nAcDbPolyline\n")
     f.write("  90\n")
-    f.write("  "+str(len(invols)-2)+"\n")
+    f.write("  "+str(len(invols)-1)+"\n")
     f.write("  70\n0\n")
     for i1 in range(0,len(invols)):
         x1 = invols[i1,0]
@@ -212,8 +212,6 @@ def createdxf():
     for i1 in range(0,circ.shape[1]):
         cx1 = circ[0,i1]
         cy1 = circ[1,i1]
-        cx2 = circ[0,i1]
-        cy2 = circ[1,i1]
         f.write(" 10\n{0}\n".format(cx1))
         f.write(" 20\n{0}\n".format(cy1))
         f.write(" 30\n0\n")
