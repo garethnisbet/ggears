@@ -72,9 +72,9 @@ else:
     minrange=0
 
 table = {'1 Root Diameter': rootd, '2 Base Diameter':  bd, '3 Pitch Diameter': pitchdia, \
-         '4 Outside Diameter': od, '5 Addendum': addendum,'5 Dedendum': dedendum,'7 Module': m,\
-         '8 Resolution': resolution}
-table2='1 Root Diameter: ' + str(rootd) +'\n'+ '2 Base Diameter: ' + str(bd) +'\n' + '3 Pitch Diameter: ' + str(pitchdia) +'\n' +'4 Outside Diameter :'+ str(od) +'\n' + '5 Addendum: '+ str(addendum)+'\n'+'5 Dedendum: '+str(dedendum) +'\n'+'7 Module: '+ str(m) +'\n'+'8 Resolution: ' + str(resolution)
+         '4 Outside Diameter': od, '5 Addendum': addendum,'6 Dedendum': dedendum,'7 Pressure Angle': pressureangle,'8 Module': m,\
+         '9 Resolution': resolution}
+table2='1 Root Diameter: ' + str(rootd) +'\n'+ '2 Base Diameter: ' + str(bd) +'\n' + '3 Pitch Diameter: ' + str(pitchdia) +'\n' +'4 Outside Diameter :'+ str(od) +'\n' + '5 Addendum: '+ str(addendum)+'\n'+'6 Dedendum: '+str(dedendum) +'\n'+'7 Pressure Angle: '+str(pressureangle) +'\n'+'8 Module: '+ str(m) +'\n'+'9 Resolution: ' + str(resolution)
 for param, val in sorted(table.items()):
     print'%-20s  %0.4f' % (param, val)
 
@@ -421,7 +421,7 @@ class Gears( Frame ):
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="#acff77", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         global table2
-        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'5 Dedendum: '+str(dedendum2) +'\n'+'7 Module: '+ str(m2) +'\n'+'8 Resolution: ' + str(resolution2)
+        table2='1 Root Diameter: ' + str(rootd2) +'\n'+ '2 Base Diameter: ' + str(bd2) +'\n' + '3 Pitch Diameter: ' + str(pitchdia2) +'\n' +'4 Outside Diameter :'+ str(od2) +'\n' + '5 Addendum: '+ str(addendum2)+'\n'+'6 Dedendum: '+str(dedendum2) +'\n'+'7 Pressure Angle: '+str(pressureangle2) +'\n'+'8 Module: '+ str(m2) +'\n'+'9 Resolution: ' + str(resolution2)
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
         global outfile2
         if gtype == 'internal' or gtype == '1':
