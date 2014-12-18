@@ -231,20 +231,19 @@ def createsvg():
         print('SVG created ' + outfile +'.svg')
     f = open(outfilesvg, "w")
     f.write('<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n')
-    f.write('<!-- Created with ggear by G. Nisbet) -->\n')
+    f.write('<!-- Created with ggears by Gareth Nisbet) -->\n')
     f.write('<svg')
     f.write(' docname="ggears.svg">\n')
     f.write('   <g\n')
-    f.write('     id="g1"\n')
-    f.write('     font-size="0.2"\n')
     if args.tmat == None:
         f.write('     transform="matrix(3.5434,0,0,3.5434,0,0)"\n')
     else:
         f.write('     transform="matrix('+str(args.tmat) +')"\n')
     f.write('     style="font-size:1px;stroke-width:0.05">\n')
-    f.write('<circle r="' +str(base/2.0) +'" stroke="black" stroke-width="0.05" fill="none" />\n')
+    if internal=='internal':
+    	f.write('<circle r="' +str(base/2.0) +'" stroke="black" stroke-width="0.05" fill="none" />\n')
     f.write('    <path\n')
-    f.write('       id="path1"\n')
+    f.write('       id="gear"\n')
     f.write('       d="m ')
     for i in range(1,len(invols)-1):
         x1 = invols[i-1,0]
@@ -253,6 +252,8 @@ def createsvg():
     f.write(str(invols[0,0])+','+str(invols[0,1]))
     f.write('z"\n')
     f.write('       style="fill:none;stroke:#000000" />\n')
+    if internal=='external':
+    	f.write('<circle r="' +str(base/2.0) +'" stroke="black" stroke-width="0.05" fill="none" />\n')
     f.write('  </g>\n')
     f.write('</svg>')
     f.close()
