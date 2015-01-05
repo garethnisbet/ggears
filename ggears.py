@@ -35,7 +35,7 @@ pressureangle=float(args.pressureangle)
 base=float(args.diameter)
 internal = args.type
 if args.prefix == None:
-    prefix = 'gears'
+    prefix = 'ggears-'
 else:
     prefix = args.prefix
 if args.resolution == None:
@@ -74,7 +74,7 @@ else:
 table = {'1 Root Diameter': rootd, '2 Base Diameter':  bd, '3 Pitch Diameter': pitchdia, \
          '4 Outside Diameter': od, '5 Addendum': addendum,'6 Dedendum': dedendum,'7 Pressure Angle': pressureangle,'8 Module': m,\
          '9 Resolution': resolution}
-table2='1   No. Teeth: ' + str(numteeth) +'\n'+'2   Root Diameter: ' + str(rootd) +'\n'+ '3   Base Diameter: ' + str(bd) +'\n' + '4   Pitch Diameter: ' + str(pitchdia) +'\n' +'5   Outside Diameter :'+ str(od) +'\n' + '6   Addendum: '+ str(addendum)+'\n'+'7   Dedendum: '+str(dedendum) +'\n'+'8   Pressure Angle: '+str(pressureangle) +'\n'+'9   Module: '+ str(m) +'\n'+'10 Resolution: ' + str(resolution)
+table2='1   No. Teeth: ' + str(numteeth) +'\n'+'2   Root Diameter: ' + str(rootd) +'\n'+ '3   Base Diameter: ' + str(bd) +'\n' + '4   Pitch Diameter: ' + str(pitchdia) +'\n' +'5   Outside Diameter:'+ str(od) +'\n' + '6   Addendum: '+ str(addendum)+'\n'+'7   Dedendum: '+str(dedendum) +'\n'+'8   Pressure Angle: '+str(pressureangle) +'\n'+'9   Module: '+ str(m) +'\n'+'10 Resolution: ' + str(resolution)
 for param, val in sorted(table.items()):
     print'%-20s  %0.4f' % (param, val)
 
@@ -268,13 +268,13 @@ def inkopen():
     except:
         outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
         subprocess.Popen(['inkscape', outfile + '.svg'], stdout=subprocess.PIPE)
-def libreCADopen():
+def freeCADopen():
     createdxf()
     try:
-        subprocess.Popen(['librecad', outfile2 +'.dxf'], stdout=subprocess.PIPE)
+        subprocess.Popen(['freecad', outfile2 +'.dxf'], stdout=subprocess.PIPE)
     except:
         outfile = 'internal-'+str(numteeth)+'teeth'+'M'+str(m)
-        subprocess.Popen(['librecad', outfile +'.dxf'], stdout=subprocess.PIPE)
+        subprocess.Popen(['freecad', outfile +'.dxf'], stdout=subprocess.PIPE)
 def exitfunc():
     exit()
 #===============================================================================
@@ -298,7 +298,7 @@ class Gears( Frame ):
 #===============================================================================
         self.button = Button(text="Incscape", width=10, fg="black", command = inkopen)
         self.button.grid(row=3, column=22)
-        self.button = Button(text="libreCAD", width=10,fg="black", command = libreCADopen)
+        self.button = Button(text="freeCAD", width=10,fg="black", command = freeCADopen)
         self.button.grid(row=4, column=22)
         self.button = Button(text="Create DXF", width=10,fg="black", command = createdxf)
         self.button.grid(row=3, column=23)
@@ -422,7 +422,7 @@ class Gears( Frame ):
         self.display.create_oval( canvasx/2.0 - x, canvasy/2.0 - x, canvasx/2.0 + x, canvasy/2.0 + x, outline="#acff77", tag='gear')
         canvas_id=self.display.create_text(10, 10, anchor="nw",fill='white')
         global table2
-        table2='1   No. Teeth: ' + str(numteeth2) + '\n'+ '2   Root Diameter: ' + str(rootd2) +'\n'+ '3   Base Diameter: ' + str(bd2) +'\n' + '4   Pitch Diameter: ' + str(pitchdia2) +'\n' +'5   Outside Diameter :'+ str(od2) +'\n' + '6   Addendum: '+ str(addendum2)+'\n'+'7   Dedendum: '+str(dedendum2) +'\n'+'8   Pressure Angle: '+str(pressureangle2) +'\n'+'9   Module: '+ str(m2) +'\n'+'10 Resolution: ' + str(resolution2)
+        table2='1   No. Teeth: ' + str(numteeth2) + '\n'+ '2   Root Diameter: ' + str(rootd2) +'\n'+ '3   Base Diameter: ' + str(bd2) +'\n' + '4   Pitch Diameter: ' + str(pitchdia2) +'\n' +'5   Outside Diameter:'+ str(od2) +'\n' + '6   Addendum: '+ str(addendum2)+'\n'+'7   Dedendum: '+str(dedendum2) +'\n'+'8   Pressure Angle: '+str(pressureangle2) +'\n'+'9   Module: '+ str(m2) +'\n'+'10 Resolution: ' + str(resolution2)
         self.display.itemconfig(canvas_id, text=table2, tag='gear')
         global outfile2
         if gtype == 'internal' or gtype == '1':
@@ -461,9 +461,9 @@ invols=gears(numteeth, rootd, pitchdia,w1,invol,args.type)
 
 if args.filetype != None:
     if args.type == 'internal':
-        outfile = prefix + '-ggears-internal-'+str(numteeth)+'teeth'+'M'+str(m)
+        outfile = prefix + '-internal-'+str(numteeth)+'teeth'+'M'+str(m)
     else:
-        outfile = prefix + '-ggears-external-'+str(numteeth)+'teeth'+'M'+str(m)
+        outfile = prefix + '-external-'+str(numteeth)+'teeth'+'M'+str(m)
     if args.filetype == 'svg':
         outfile = outfile+'.svg'
         createsvg()
