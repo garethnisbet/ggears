@@ -48,7 +48,7 @@ if args.module == None:
 else:
     m=float(args.module)
     
-pitchdia = numteeth/m
+pitchdia = numteeth*m
 Pd = numteeth / pitchdia
 
 if args.addendum == None:
@@ -389,7 +389,7 @@ class Gears( Frame ):
         else:
             m2 = float(self.entrytext7.get())
         
-        pitchdia2 = numteeth2/m2
+        pitchdia2 = numteeth2*m2
         Pd2 = numteeth2 / pitchdia2
         bd2=pitchdia2*np.cos(pressureangle2*np.pi/180.0)
         od2=pitchdia2+(2.0*addendum2)
