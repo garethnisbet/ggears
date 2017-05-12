@@ -364,14 +364,6 @@ class Gears( Frame ):
             pressureangle2=pressureangle
         else:
             pressureangle2 = float(self.entrytext2.get())
-        if self.entrytext3.get() == '':
-            addendum2 = addendum
-        else:
-            addendum2 = float(self.entrytext3.get())
-        if self.entrytext4.get() == '':
-            dedendum2=dedendum
-        else:
-            dedendum2 = float(self.entrytext4.get())
         global base
         if self.entrytext5.get() == '':
             base2 = base
@@ -388,6 +380,21 @@ class Gears( Frame ):
             m2 = m
         else:
             m2 = float(self.entrytext7.get())
+
+        if self.entrytext3.get() == '':
+            pitchdia2 = numteeth2*m2
+            Pd2 = numteeth2 / pitchdia2
+            addendum2 = 1.0/Pd2
+        else:
+            addendum2 = float(self.entrytext3.get())
+
+        if self.entrytext4.get() == '':
+            pitchdia2 = numteeth2*m2
+            Pd2 = numteeth2 / pitchdia2
+            dedendum2 = 1.25/Pd2
+
+        else:
+            dedendum2 = float(self.entrytext4.get())
         
         pitchdia2 = numteeth2*m2
         Pd2 = numteeth2 / pitchdia2
