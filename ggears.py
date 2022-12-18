@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 import sys
 import subprocess
 import argparse
@@ -22,7 +22,10 @@ except:
     print('Numpy is not installed; try:\n sudo apt-get install numpy')
     exit()
 try:
-    from Tkinter import *
+    try:
+        from Tkinter import *
+    except:
+        from tkinter import *
 except:
     print('Tkinter is not installed; try:\n sudo apt-get install Tkinter\nOr use -ft svg or -ft dxf to write files directly.')
     exit()
@@ -76,7 +79,7 @@ table = {'1 Root Diameter': rootd, '2 Base Diameter':  bd, '3 Pitch Diameter': p
          '9 Resolution': resolution}
 table2='1   No. Teeth: ' + str(numteeth) +'\n'+'2   Root Diameter: ' + str(rootd) +'\n'+ '3   Base Diameter: ' + str(bd) +'\n' + '4   Pitch Diameter: ' + str(pitchdia) +'\n' +'5   Outside Diameter:'+ str(od) +'\n' + '6   Addendum: '+ str(addendum)+'\n'+'7   Dedendum: '+str(dedendum) +'\n'+'8   Pressure Angle: '+str(pressureangle) +'\n'+'9   Module: '+ str(m) +'\n'+'10 Resolution: ' + str(resolution)
 for param, val in sorted(table.items()):
-    print'%-20s  %0.4f' % (param, val)
+    print('%-20s  %0.4f' % (param, val))
 
 #===============================================================================
 #                 Generalised rotation matrix
@@ -192,7 +195,7 @@ def createdxf():
     f.write("  90\n")
     f.write("  "+str(len(invols)-1)+"\n")
     f.write("  70\n0\n")
-    for i1 in list(range(0,len(invols))):
+    for i1 in range(0,len(invols)):
         x1 = invols[i1,0]
         y1 = invols[i1,1]
         f.write(" 10\n{0}\n".format(x1))
@@ -416,7 +419,7 @@ class Gears( Frame ):
         base=base2       
         global invols
 
-        datarange2=np.linspace(minrange,maxrange,resolution2)
+        datarange2=np.linspace(minrange,maxrange,int(resolution2))
         invol2=involute(rootd2,bd2,pitchdia2,datarange2)
         invols=gears(numteeth2, rootd2, pitchdia2,w2,invol2,gtype)
         for i in range(1,len(invols)-1):
@@ -447,7 +450,7 @@ class Gears( Frame ):
         self.display.delete( "gear" )
         canvasx=self.canvasx
         canvasy=self.canvasy
-        for i in range(1,len(invols)-1):
+        for i in list(range(1,len(invols)-1)):
             x1 = invols[i-1,0]
             y1 = invols[i-1,1]
             x2 = invols[i,0]
