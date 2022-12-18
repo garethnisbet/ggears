@@ -192,7 +192,7 @@ def createdxf():
     f.write("  90\n")
     f.write("  "+str(len(invols)-1)+"\n")
     f.write("  70\n0\n")
-    for i1 in range(0,len(invols)):
+    for i1 in list(range(0,len(invols))):
         x1 = invols[i1,0]
         y1 = invols[i1,1]
         f.write(" 10\n{0}\n".format(x1))
@@ -209,7 +209,7 @@ def createdxf():
     f.write("  90\n")
     f.write("  "+str(circ.shape[1])+"\n")
     f.write("  70\n0\n")
-    for i1 in range(0,circ.shape[1]):
+    for i1 in list(range(0,circ.shape[1])):
         cx1 = circ[0,i1]
         cy1 = circ[1,i1]
         f.write(" 10\n{0}\n".format(cx1))
@@ -245,7 +245,7 @@ def createsvg():
     f.write('    <path\n')
     f.write('       id="gear"\n')
     f.write('       d="m ')
-    for i in range(1,len(invols)-1):
+    for i in list(range(1,len(invols)-1)):
         x1 = invols[i-1,0]
         y1 = invols[i-1,1]
         f.write(str(x1)+','+str(y1)+' L ')
